@@ -65,6 +65,5 @@ public class MainActivity extends AppCompatActivity {
         });
 
         taskListLayout.addView(taskView);
-
     }
 }
