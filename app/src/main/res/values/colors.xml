@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="darkshit">#483d3f</color>
+    <color name="eggshell">#F4EBD9</color>
+    <color name="mint">#09BC8A</color>
+    <color name="bojqielli">#7FBEEB</color>
+</resources>
