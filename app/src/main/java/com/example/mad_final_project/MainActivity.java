@@ -9,6 +9,8 @@ import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -66,4 +68,8 @@ public class MainActivity extends AppCompatActivity {
 
         taskListLayout.addView(taskView);
     }
+
+
+
+
 }
