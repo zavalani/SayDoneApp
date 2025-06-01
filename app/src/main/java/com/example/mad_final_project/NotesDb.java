@@ -1,3 +1,5 @@
+package com.example.mad_final_project;
+
 import android.database.sqlite.SQLiteOpenHelper;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -49,7 +51,11 @@ public class NotesDb extends SQLiteOpenHelper {
         return db.query(TABLE_NAME, null, null, null, null, null, COLUMN_TIMESTAMP + " DESC");
     }
 
-
+    public void deleteNote(String content) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_NAME, COLUMN_CONTENT + "=?", new String[]{content});
+        db.close();
+    }
 
 
 }

@@ -22,7 +22,8 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 public class VoiceInputActivity extends AppCompatActivity {
-
+    private ImageButton btnMicStop; // New stop button
+    private boolean isRecording = false;
     private EditText etRecognizedText;
     private ImageButton btnMicStart;
     private Button btnDone;
@@ -36,6 +37,7 @@ public class VoiceInputActivity extends AppCompatActivity {
 
         etRecognizedText = findViewById(R.id.etRecognizedText);
         btnMicStart = findViewById(R.id.btnMicStart);
+        btnMicStop = findViewById(R.id.btnMicStop); // find view
         btnDone = findViewById(R.id.btnDone);
 
         // Check audio permission
@@ -52,15 +54,30 @@ public class VoiceInputActivity extends AppCompatActivity {
         speechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
 
         speechRecognizer.setRecognitionListener(new RecognitionListener() {
-            @Override public void onReadyForSpeech(Bundle params) {}
-            @Override public void onBeginningOfSpeech() {}
-            @Override public void onRmsChanged(float rmsdB) {}
-            @Override public void onBufferReceived(byte[] buffer) {}
-            @Override public void onEndOfSpeech() {}
+            @Override
+            public void onReadyForSpeech(Bundle params) {
+            }
+
+            @Override
+            public void onBeginningOfSpeech() {
+            }
+
+            @Override
+            public void onRmsChanged(float rmsdB) {
+            }
+
+            @Override
+            public void onBufferReceived(byte[] buffer) {
+            }
+
+            @Override
+            public void onEndOfSpeech() {
+            }
 
             @Override
             public void onError(int error) {
                 Toast.makeText(VoiceInputActivity.this, "Error recognizing speech", Toast.LENGTH_SHORT).show();
+                stopListeningUI();
             }
 
             @Override
@@ -69,16 +86,36 @@ public class VoiceInputActivity extends AppCompatActivity {
                 if (matches != null && matches.size() > 0) {
                     etRecognizedText.setText(matches.get(0));
                 }
+                stopListeningUI(); // reset UI
             }
 
-            @Override public void onPartialResults(Bundle partialResults) {}
-            @Override public void onEvent(int eventType, Bundle params) {}
+            @Override
+            public void onPartialResults(Bundle partialResults) {
+            }
+
+            @Override
+            public void onEvent(int eventType, Bundle params) {
+            }
         });
 
-        // Start mic on button click
-        btnMicStart.setOnClickListener(v -> speechRecognizer.startListening(speechRecognizerIntent));
+        btnMicStart.setOnClickListener(v -> {
+            if (!isRecording) {
+                isRecording = true;
+                speechRecognizer.startListening(speechRecognizerIntent);
+                btnMicStart.setVisibility(View.GONE);
+                btnMicStop.setVisibility(View.VISIBLE);
+                Toast.makeText(this, "Recording started...", Toast.LENGTH_SHORT).show();
+            }
+        });
 
-        // Send back to MainActivity
+        btnMicStop.setOnClickListener(v -> {
+            if (isRecording) {
+                isRecording = false;
+                speechRecognizer.stopListening();
+                stopListeningUI();
+            }
+        });
+
         btnDone.setOnClickListener(v -> {
             String task = etRecognizedText.getText().toString().trim();
             if (!task.isEmpty()) {
@@ -90,11 +127,9 @@ public class VoiceInputActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (speechRecognizer != null) {
-            speechRecognizer.destroy();
-        }
+    private void stopListeningUI() {
+        btnMicStart.setVisibility(View.VISIBLE);
+        btnMicStop.setVisibility(View.GONE);
+        isRecording = false;
     }
 }
