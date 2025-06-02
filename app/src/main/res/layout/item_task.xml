@@ -5,6 +5,15 @@
     android:orientation="horizontal"
     android:padding="12dp">
 
+
+    <Button
+        android:id="@+id/btnSearchTask"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#bb8fce"
+        android:text="Search" />
+
+
     <CheckBox
         android:id="@+id/checkboxTask"
         android:layout_width="wrap_content"
@@ -16,4 +25,6 @@
         android:layout_height="wrap_content"
         android:textSize="18sp"
         android:layout_marginStart="12dp" />
+
+
 </LinearLayout>

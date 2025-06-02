@@ -3,12 +3,15 @@ package com.example.mad_final_project;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Paint;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import androidx.annotation.Nullable;
@@ -69,25 +72,30 @@ public class MainActivity extends AppCompatActivity {
         View taskView = getLayoutInflater().inflate(R.layout.item_task, null);
         CheckBox checkBox = taskView.findViewById(R.id.checkboxTask);
         TextView textView = taskView.findViewById(R.id.textViewTask);
+        Button btnSearch = taskView.findViewById(R.id.btnSearchTask);  // new
 
         textView.setText(taskText);
 
         checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
-                // Add strikethrough
                 textView.setPaintFlags(textView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-
-                // Remove after delay
                 new Handler().postDelayed(() -> {
                     taskListLayout.removeView(taskView);
-
-                    // ✅ Delete from DB
                     notesDb.deleteNote(taskText);
-
                 }, 2000);
             } else {
-                // Remove strikethrough
                 textView.setPaintFlags(textView.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+            }
+        });
+
+        // ✅ Implicit Intent to search task on Google
+        btnSearch.setOnClickListener(v -> {
+            String query = Uri.encode(taskText);
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.google.com/search?q=" + query));
+            if (intent.resolveActivity(getPackageManager()) != null) {
+                startActivity(intent);
+            } else {
+                Toast.makeText(MainActivity.this, "No browser app found to perform web search", Toast.LENGTH_SHORT).show();
             }
         });
 
