@@ -40,13 +40,13 @@ public class VoiceInputActivity extends AppCompatActivity {
         btnMicStop = findViewById(R.id.btnMicStop); // find view
         btnDone = findViewById(R.id.btnDone);
 
-        // Check audio permission
+
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)
                 != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECORD_AUDIO}, 1);
         }
 
-        // Initialize SpeechRecognizer
+
         speechRecognizer = SpeechRecognizer.createSpeechRecognizer(this);
         speechRecognizerIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         speechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,

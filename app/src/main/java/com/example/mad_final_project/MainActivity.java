@@ -29,7 +29,7 @@ import com.example.mad_final_project.NotesDb;
 public class MainActivity extends AppCompatActivity {
 
     private LinearLayout taskListLayout;
-    private NotesDb notesDb;  // ✅ Database helper
+    private NotesDb notesDb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,9 +40,9 @@ public class MainActivity extends AppCompatActivity {
         btnEmoji.setOnClickListener(v -> fetchEmoji());
 
         taskListLayout = findViewById(R.id.taskListLayout);
-        notesDb = new NotesDb(this);  // ✅ Initialize database
+        notesDb = new NotesDb(this);
 
-        // ✅ Load saved tasks from database
+
         Cursor cursor = notesDb.getAllNotes();
         if (cursor != null) {
             while (cursor.moveToNext()) {
@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
             cursor.close();
         }
 
-        // ✅ Set up mic button
+
         findViewById(R.id.btnMic).setOnClickListener(view -> {
             Intent intent = new Intent(MainActivity.this, VoiceInputActivity.class);
             startActivityForResult(intent, 123); // or startActivity(intent);
@@ -63,50 +63,31 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void fetchEmoji() {
-
         new Thread(() -> {
-
             try {
-
                 URL url = new URL("https://emojihub.yurace.pro/api/random");
-
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-
                 conn.setRequestMethod("GET");
-
                 conn.connect();
-
                 BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-
                 StringBuilder result = new StringBuilder();
-
                 String line;
-
                 while ((line = reader.readLine()) != null) {
-
                     result.append(line);
-
                 }
 
                 reader.close();
-
                 JSONObject json = new JSONObject(result.toString());
-
                 String emojiHtml = json.getJSONArray("htmlCode").getString(0);
 
                 runOnUiThread(() -> {
-
                     TextView emojiView = findViewById(R.id.textViewEmoji);
                     emojiView.setText(android.text.Html.fromHtml(emojiHtml));
-
                 });
 
             } catch (Exception e) {
-
                 e.printStackTrace();
-
                 runOnUiThread(() -> Toast.makeText(MainActivity.this, "Failed to fetch emoji", Toast.LENGTH_SHORT).show());
-
             }
 
         }).start();
@@ -122,11 +103,11 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == 123 && resultCode == RESULT_OK && data != null) {
             String newTask = data.getStringExtra("new_task");
             if (newTask != null && !newTask.isEmpty()) {
-                // ✅ Save to DB
+
                 long timestamp = System.currentTimeMillis();
                 notesDb.insertNote(newTask, timestamp);
 
-                // ✅ Add to UI
+
                 addTaskToList(newTask);
             }
         }
@@ -152,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // ✅ Implicit Intent to search task on Google
+
         btnSearch.setOnClickListener(v -> {
             String query = Uri.encode(taskText);
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.google.com/search?q=" + query));
