@@ -124,6 +124,7 @@ public class VoiceInputActivity extends AppCompatActivity {
                 setResult(RESULT_OK, resultIntent);
             }
             finish();
+            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
         });
     }
 

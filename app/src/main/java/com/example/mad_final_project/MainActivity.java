@@ -42,7 +42,9 @@ public class MainActivity extends AppCompatActivity {
         // ✅ Set up mic button
         findViewById(R.id.btnMic).setOnClickListener(view -> {
             Intent intent = new Intent(MainActivity.this, VoiceInputActivity.class);
-            startActivityForResult(intent, 123);
+            startActivityForResult(intent, 123); // or startActivity(intent);
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
         });
     }
 
