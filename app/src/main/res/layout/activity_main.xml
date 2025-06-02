@@ -24,20 +24,20 @@
 
     <ScrollView
         android:id="@+id/scrollViewTasks"
-        android:backgroundTint="@color/eggshell"
-        android:layout_width="415dp"
-        android:layout_height="543dp"
+        android:layout_width="410dp"
+        android:layout_height="438dp"
         android:layout_above="@+id/btnMic"
+        android:backgroundTint="@color/eggshell"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.501"
-        tools:layout_editor_absoluteX="-1dp">
+        app:layout_constraintVertical_bias="0.416"
+        tools:layout_editor_absoluteX="0dp">
 
         <LinearLayout
             android:id="@+id/taskListLayout"
-            android:backgroundTint="@color/eggshell"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/eggshell"
             android:orientation="vertical" />
 
     </ScrollView>
@@ -55,5 +55,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.975" />
+
+    <Button
+        android:id="@+id/btnEmoji"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Get Emoji"
+        app:layout_constraintBottom_toTopOf="@+id/btnMic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scrollViewTasks" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

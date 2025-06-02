@@ -13,12 +13,12 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.os.AsyncTask;
-import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+
+import org.json.JSONObject;
 
 
 import androidx.annotation.Nullable;
@@ -35,6 +35,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Button btnEmoji = findViewById(R.id.btnEmoji);
+        btnEmoji.setOnClickListener(v -> fetchEmoji());
 
         taskListLayout = findViewById(R.id.taskListLayout);
         notesDb = new NotesDb(this);  // ✅ Initialize database
@@ -57,6 +60,63 @@ public class MainActivity extends AppCompatActivity {
 
         });
     }
+
+
+    private void fetchEmoji() {
+
+        new Thread(() -> {
+
+            try {
+
+                URL url = new URL("https://emojihub.yurace.pro/api/random");
+
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+                conn.setRequestMethod("GET");
+
+                conn.connect();
+
+                BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+
+                StringBuilder result = new StringBuilder();
+
+                String line;
+
+                while ((line = reader.readLine()) != null) {
+
+                    result.append(line);
+
+                }
+
+                reader.close();
+
+                JSONObject json = new JSONObject(result.toString());
+
+                String emojiHtml = json.getJSONArray("htmlCode").getString(0);
+
+                runOnUiThread(() -> {
+
+                    Toast.makeText(MainActivity.this, "Emoji: " + android.text.Html.fromHtml(emojiHtml), Toast.LENGTH_LONG).show();
+
+                    // OR: Add emoji as a task
+
+                    addTaskToList("Emoji of the day: " + android.text.Html.fromHtml(emojiHtml));
+
+                });
+
+            } catch (Exception e) {
+
+                e.printStackTrace();
+
+                runOnUiThread(() -> Toast.makeText(MainActivity.this, "Failed to fetch emoji", Toast.LENGTH_SHORT).show());
+
+            }
+
+        }).start();
+
+    }
+
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
