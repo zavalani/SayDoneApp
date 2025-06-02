@@ -96,11 +96,8 @@ public class MainActivity extends AppCompatActivity {
 
                 runOnUiThread(() -> {
 
-                    Toast.makeText(MainActivity.this, "Emoji: " + android.text.Html.fromHtml(emojiHtml), Toast.LENGTH_LONG).show();
-
-                    // OR: Add emoji as a task
-
-                    addTaskToList("Emoji of the day: " + android.text.Html.fromHtml(emojiHtml));
+                    TextView emojiView = findViewById(R.id.textViewEmoji);
+                    emojiView.setText(android.text.Html.fromHtml(emojiHtml));
 
                 });
 

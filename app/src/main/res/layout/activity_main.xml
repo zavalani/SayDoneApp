@@ -42,28 +42,48 @@
 
     </ScrollView>
 
+    <TextView
+        android:id="@+id/textViewEmoji"
+        android:layout_width="353dp"
+        android:layout_height="63dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="16dp"
+        android:gravity="center"
+        android:text="Select random emoji!"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.862" />
+
     <Button
         android:id="@+id/btnMic"
-        android:layout_width="77dp"
-        android:layout_height="72dp"
+        android:layout_width="126dp"
+        android:layout_height="77dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:backgroundTint="@color/bojqielli"
         android:drawableBottom="@drawable/baseline_mic_white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.81"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.975" />
+        app:layout_constraintVertical_bias="0.977" />
 
     <Button
         android:id="@+id/btnEmoji"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="128dp"
+        android:layout_height="76dp"
         android:text="Get Emoji"
-        app:layout_constraintBottom_toTopOf="@+id/btnMic"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.18"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scrollViewTasks" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.975"
+        android:backgroundTint="#52be80"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
