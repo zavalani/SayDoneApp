@@ -39,11 +39,6 @@ public class MainActivity extends AppCompatActivity {
         taskListLayout = findViewById(R.id.taskListLayout);
         notesDb = new NotesDb(this);  // ✅ Initialize database
 
-        Button btnBored = findViewById(R.id.btnBored);
-        btnBored.setOnClickListener(v -> {
-            new FetchBoredActivityTask().execute("https://www.boredapi.com/api/activity");
-        });
-
         // ✅ Load saved tasks from database
         Cursor cursor = notesDb.getAllNotes();
         if (cursor != null) {
@@ -100,13 +95,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-
-
-
-
-
-
         // ✅ Implicit Intent to search task on Google
         btnSearch.setOnClickListener(v -> {
             String query = Uri.encode(taskText);
@@ -120,43 +108,4 @@ public class MainActivity extends AppCompatActivity {
 
         taskListLayout.addView(taskView);
     }
-
-    private class FetchBoredActivityTask extends AsyncTask<String, Void, String> {
-        @Override
-        protected String doInBackground(String... urls) {
-            StringBuilder response = new StringBuilder();
-            try {
-                URL url = new URL(urls[0]);
-                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                conn.setRequestMethod("GET");
-
-                BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    response.append(line);
-                }
-                reader.close();
-
-                JSONObject jsonObject = new JSONObject(response.toString());
-                return jsonObject.getString("activity");
-
-            } catch (Exception e) {
-                e.printStackTrace();
-                return null;
-            }
-        }
-
-        @Override
-        protected void onPostExecute(String activity) {
-            if (activity != null) {
-                notesDb.insertNote(activity, System.currentTimeMillis());
-                addTaskToList(activity);
-                Toast.makeText(MainActivity.this, "New suggestion added!", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(MainActivity.this, "Failed to fetch activity", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
-
-
 }
