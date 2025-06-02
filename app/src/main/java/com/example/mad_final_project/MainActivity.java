@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -72,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
         View taskView = getLayoutInflater().inflate(R.layout.item_task, null);
         CheckBox checkBox = taskView.findViewById(R.id.checkboxTask);
         TextView textView = taskView.findViewById(R.id.textViewTask);
-        Button btnSearch = taskView.findViewById(R.id.btnSearchTask);  // new
+        ImageButton btnSearch = taskView.findViewById(R.id.btnSearchTask);  // new
 
         textView.setText(taskText);
 

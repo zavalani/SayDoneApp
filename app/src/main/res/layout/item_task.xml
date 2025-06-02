@@ -6,12 +6,13 @@
     android:padding="12dp">
 
 
-    <Button
+    <ImageButton
         android:id="@+id/btnSearchTask"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="#bb8fce"
-        android:text="Search" />
+        android:text="Search"
+        android:src="@android:drawable/ic_menu_search"/>
 
 
     <CheckBox
