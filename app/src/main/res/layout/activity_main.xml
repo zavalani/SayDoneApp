@@ -40,8 +40,8 @@
 
     <Button
         android:id="@+id/btnMic"
-        android:layout_width="96dp"
-        android:layout_height="87dp"
+        android:layout_width="77dp"
+        android:layout_height="72dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:drawableBottom="@drawable/baseline_mic_white"
